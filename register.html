@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription - MAOUDIA Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(115deg, #001f3f, #0074D9);
+      background-size: cover;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    .container {
+      background: rgba(0,0,0,0.7);
+      padding: 40px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #0074D9;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Inscription</h1>
+    <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Mot de passe" required>
+    <input type="password" id="confirm" placeholder="Confirmer le mot de passe" required>
+    <button onclick="register()">S'inscrire</button>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://yczsecjlbwvrfvneojuk.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljenNlY2psYnd2cmZ2bmVvanVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNjE5MjAsImV4cCI6MjA2MjgzNzkyMH0.Wzyz7ffHfVIzBiNKZNFt8q8nTuP2PoCsIbIcsONshd0"
+    );
+
+    async function register() {
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+
+      if (password !== confirm) {
+        alert("Les mots de passe ne correspondent pas.");
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: username
+          }
+        }
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Compte créé ! Vérifie ton email.");
+        window.location.href = "login.html";
+      }
+    }
+  </script>
+</body>
+</html>
