@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - MAOUDIA Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #0074D9, #001f3f);
+      color: white;
+      margin: 0;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .content {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenue sur MAOUDIA Network</h1>
+    <p id="user-info"></p>
+  </header>
+
+  <nav>
+    <a href="#">Accueil</a>
+    <a href="#">Forum</a>
+    <a href="#" onclick="logout()">Déconnexion</a>
+  </nav>
+
+  <div class="content">
+    <h2>Forum bientôt disponible !</h2>
+    <p>Tu es connecté. Reste à l’écoute pour les prochaines fonctionnalités !</p>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://yczsecjlbwvrfvneojuk.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljenNlY2psYnd2cmZ2bmVvanVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNjE5MjAsImV4cCI6MjA2MjgzNzkyMH0.Wzyz7ffHfVIzBiNKZNFt8q8nTuP2PoCsIbIcsONshd0"
+    );
+
+    supabase.auth.getUser().then(({ data, error }) => {
+      if (data.user) {
+        document.getElementById("user-info").innerText = "Connecté en tant que " + data.user.email;
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
