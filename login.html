@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion - MAOUDIA Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #001f3f, #39CCCC);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    .container {
+      background: rgba(0,0,0,0.75);
+      padding: 40px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #39CCCC;
+      color: black;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #2bb0aa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Connexion</h1>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Mot de passe" required>
+    <button onclick="login()">Se connecter</button>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://yczsecjlbwvrfvneojuk.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljenNlY2psYnd2cmZ2bmVvanVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNjE5MjAsImV4cCI6MjA2MjgzNzkyMH0.Wzyz7ffHfVIzBiNKZNFt8q8nTuP2PoCsIbIcsONshd0"
+    );
+
+    async function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email, password
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Connexion réussie !");
+        window.location.href = "dashboard.html";
+      }
+    }
+  </script>
+</body>
+</html>
